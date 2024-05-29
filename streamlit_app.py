@@ -59,5 +59,5 @@ if len(ticker) < 2:
                                                  open=df["Open"],
                                                  volume=df["Volume"]))
     indicator["High"] = df["High"]
-    fig_W_ind_new = px.line(indicator)
-    col1.plotly_chart(fig_W_ind_new)
+    figraph = px.line(indicator)
+    col1.plotly_chart(figraph)
