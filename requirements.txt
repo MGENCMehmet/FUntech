@@ -1,5 +1,5 @@
 streamlit
-yfinance
-plotly.express
-pandas
-pandas_ta
+yfinance as yf
+plotly.express as px
+pandas as pd
+pandas_ta as ta
