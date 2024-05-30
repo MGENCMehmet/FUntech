@@ -6,7 +6,10 @@ import pandas_ta as ta
 
 st.set_page_config(layout="wide")
 
-st.title("FUntech")
+st.write(
+    '<h1 style="text-align: center;">FUntech</h1>',
+    unsafe_allow_html=True
+)
 
 col1, col2 = st.columns([1, 1])
 
