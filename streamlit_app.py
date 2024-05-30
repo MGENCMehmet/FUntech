@@ -77,7 +77,7 @@ if len(ticker) < 2:
     indicator["High"] = df["High"]
     figraph = px.line(indicator)
     figraph.update_layout(
-        width=800,
+        width=1000,
         height=450,
     )
     col2.plotly_chart(figraph)
