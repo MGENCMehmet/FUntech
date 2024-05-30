@@ -30,7 +30,7 @@ tickers = (
     "ASELS.IS", "BIMAS.IS", "TCELL.IS", "EREGL.IS", "TKFEN.IS"
 )
 
-ticker = st.sidebar.multiselect("Giriniz", tickers)
+ticker = col1.selectbox("Giriniz", tickers)
 sdate = st.sidebar.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
 edate = st.sidebar.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
 
