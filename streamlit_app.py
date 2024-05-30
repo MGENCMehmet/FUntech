@@ -58,6 +58,7 @@ else:
 if len(ticker) < 2:
     col2.subheader("İndikatör")
     ind_list = df.ta.indicators(as_list=True)
+    technical_indicator = col2.selectbox("İndikatör Seç", options=ind_list)
     method = technical_indicator
     indicator = pd.DataFrame(getattr(ta, method)(low=df["Low"],
                                                  close=df["Close"],
@@ -67,4 +68,3 @@ if len(ticker) < 2:
     indicator["High"] = df["High"]
     figraph = px.line(indicator)
     col2.plotly_chart(figraph)
-    technical_indicator = col2.selectbox("İndikatör Seç", options=ind_list)
