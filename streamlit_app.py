@@ -6,6 +6,14 @@ import pandas_ta as ta
 
 st.set_page_config(layout="wide")
 
+hide_github_button = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    .css-1v3fvcr p {visibility: hidden;}
+    </style>
+"""
+
 col1, col2 = st.columns([1, 1])
 
 col1.subheader("Panel")
