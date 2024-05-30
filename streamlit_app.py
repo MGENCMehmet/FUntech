@@ -13,6 +13,7 @@ hide_github_button = """
     .css-1v3fvcr p {visibility: hidden;}
     </style>
 """
+st.markdown(hide_github_button, unsafe_allow_html=True)
 
 col1, col2 = st.columns([1, 1])
 
