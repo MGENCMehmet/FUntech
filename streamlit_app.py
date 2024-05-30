@@ -45,6 +45,10 @@ def dest(dfa):
 if len(ticker) == 0:
     df = yf.download("ASELS.IS", start=sdate, end=edate)
     fig = px.line(df, x=df.index, y=df["High"])
+    fig.update_layout(
+        width=800,
+        height=600,
+    )
     col1.plotly_chart(fig)
     col1.write("ASELS.IS")
 elif len(ticker) == 1:
