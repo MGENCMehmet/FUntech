@@ -5,7 +5,9 @@ import pandas as pd
 import pandas_ta as ta
 
 st.set_page_config(layout="wide")
+
 st.title("FUntech")
+
 col1, col2 = st.columns([1, 1])
 
 col1.subheader("Panel")
