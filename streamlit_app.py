@@ -54,6 +54,10 @@ if len(ticker) == 0:
 elif len(ticker) == 1:
     df = yf.download(ticker, start=sdate, end=edate)
     fig = px.line(df, x=df.index, y=df["High"])
+    fig.update_layout(
+        width=800,
+        height=450,
+    )
     col1.plotly_chart(fig)
 else:
     st.write("{} Değerleri arasındaki ilişki".format(ticker))
