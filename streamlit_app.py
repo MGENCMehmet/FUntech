@@ -47,7 +47,7 @@ if len(ticker) == 0:
     fig = px.line(df, x=df.index, y=df["High"])
     fig.update_layout(
         width=800,
-        height=600,
+        height=450,
     )
     col1.plotly_chart(fig)
     col1.write("ASELS.IS")
