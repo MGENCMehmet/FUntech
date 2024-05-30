@@ -1,12 +1,3 @@
-hide_github_button = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    .css-1lsmgbg.egzxvld2 {display: none;}
-    </style>
-"""
-st.markdown(hide_github_button, unsafe_allow_html=True)
-
 import streamlit as st
 import yfinance as yf
 import plotly.express as px
