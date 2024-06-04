@@ -3,7 +3,3 @@ yfinance
 plotly.express
 pandas
 pandas_ta
-tensorflow
-scikit-learn
-numpy
-threading
