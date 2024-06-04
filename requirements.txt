@@ -3,5 +3,3 @@ yfinance
 plotly.express
 pandas
 pandas_ta
-numpy
-sklearn
