@@ -38,7 +38,7 @@ sdate = st.sidebar.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetim
 edate = st.sidebar.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))                                                                      
                                                                                                                                                           
 st.sidebar.markdown("### Görüş ve Öneriler")                                                                                                              
-st.sidebar.text_area("Tabii ki görüş ve önerilerinizi önemsiyoruz")                                                                                       
+st.sidebar.text_area("görüş ve önerilerinizi önemsiyoruz")                                                                                       
                                                                                                                                                           
 if st.sidebar.button("Gönder"):                                                                                                                           
     st.sidebar.success("Geri Bildiriminizi Aldık")                                                                                                        
