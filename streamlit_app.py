@@ -66,7 +66,7 @@ else:
         dfl = []                                                                                                                                          
                                                                                                                                                           
         for tick in ticker:                                                                                                                               
-            df = yf.download(tick, start=sdate, end=edate)                                                                                                
+            df = yf.download(tick, start=sdate, end=edate, progress=False)                                                                                                
             df['Ticker'] = tick                                                                                                                           
             dfl.append(df)                                                                                                                                
                                                                                                                                                           
