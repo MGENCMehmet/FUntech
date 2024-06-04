@@ -4,11 +4,7 @@ import plotly.express as px
 import pandas as pd                                                                                                                                       
 import pandas_ta as ta                                                                                                                                    
 import plotly.graph_objects as go                                                                                                                         
-from keras.models import Sequential                                                                                                                       
-from keras.layers import Dense, LSTM                                                                                                                      
-import numpy as np                                                                                                                                        
-from sklearn.preprocessing import MinMaxScaler                                                                                                            
-import threading
+
 
 st.set_page_config(layout="wide",                                                                                                                         
                    page_title="FUntech",                                                                                                                  
@@ -230,5 +226,5 @@ else:
             st.write("Bu özelliği kullanabilmek için 1'den fazla hisse seçiniz")                                                                          
                                                                                                                                                           
     with st.expander("Tahmin"):                                                                                                                           
-        if len(ticker) == 1:
+        st.write("Yakında")
           
