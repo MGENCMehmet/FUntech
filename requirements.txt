@@ -6,3 +6,4 @@ pandas_ta
 tensorflow
 scikit-learn
 numpy
+threading
