@@ -257,7 +257,7 @@ else:
                                                                                                                                                           
             model.compile(optimizer="adam", loss="mean_squared_error")                                                                                    
                                                                                                                                                           
-            model.fit(x_train, y_train, batch_size=1, epochs=1)                                                                                           
+            model.fit(x_train, y_train, batch_size=1, epochs=1, verbose=0)                                                                                           
                                                                                                                                                           
             test_df = scaled_df[df_train_len - 60:, :]                                                                                                    
             x_test = []                                                                                                                                   
