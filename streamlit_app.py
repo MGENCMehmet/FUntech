@@ -229,48 +229,54 @@ else:
             st.write("Bu özelliği kullanabilmek için 1'den fazla hisse seçiniz")                                                                          
                                                                                                                                                           
     with st.expander("Tahmin"):                                                                                                                           
-        if len(ticker) == 1:                                                                                                                              
-                  @st.cache(allow_output_mutation=True)
-def create_model(input_shape):
-    model = Sequential()
-    model.add(LSTM(128, return_sequences=True, input_shape=input_shape))
-    model.add(LSTM(64, return_sequences=False))
-    model.add(Dense(25))
-    model.add(Dense(1))
-    model.compile(optimizer="adam", loss="mean_squared_error")
-    return model
+        if len(ticker) == 1: 
+          def create_model(input_shape):
+            model = Sequential()
+            model.add(LSTM(128, return_sequences=True, input_shape=input_shape))
+            model.add(LSTM(64, return_sequences=False))
+            model.add(Dense(25))
+            model.add(Dense(1))
+            model.compile(optimizer="adam", loss="mean_squared_error")
+            return model
 
-def train_model(model, x_train, y_train):
-    model.fit(x_train, y_train, batch_size=1, epochs=1)
-    return model
+          def train_and_predict(df_values, df_train_len, scaled_df, progress_bar):
 
-def predict_model(model, x_test):
-    return model.predict(x_test)
+            train_df = scaled_df[0:df_train_len, :]
+            x_train, y_train = [], []
+            for i in range(60, len(train_df)):
+              x_train.append(train_df[i - 60:i, 0])
+              y_train.append(train_df[i, 0])
+          x_train, y_train = np.array(x_train), np.array(y_train)
+          x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
-st.title('LSTM Model Eğitim ve Tahmin')
+          model = create_model((x_train.shape[1], 1))
+          model.fit(x_train, y_train, batch_size=1, epochs=1, verbose=0)
+          progress_bar.progress(50)
 
-input_shape = (x_train.shape[1], 1)
-model = create_model(input_shape)
-
-if st.button('Eğitim ve Tahmin'):
-    with st.spinner('model eğitiliyor...'):
-        try:
-            model = train_model(model, x_train, y_train)
-            st.success('Modeleğitildi')
-
-            test_df = scaled_df[df_train_len - 60:, :]
-            x_test = []
-            y_test = df_values[df_train_len:, :]
-
-            for i in range(60, len(test_df)):
-                x_test.append(test_df[i - 60:i, 0])
-
+          test_df = scaled_df[df_train_len - 60:, :]
+          x_test, y_test = [], df_values[df_train_len:, :]
+          for i in range(60, len(test_df)):
+            x_test.append(test_df[i - 60:i, 0])
             x_test = np.array(x_test)
             x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+            preds = model.predict(x_test)
+            preds = mms.inverse_transform(preds)
+            progress_bar.progress(100)
 
-            preds = predict_model(model, x_test)
-            st.write(preds)
-            st.success('Tahmin edildi')
-        except Exception as e:
-            st.error(f"Hata: {e}")                                                                                                                
-                                                                                                                                                          
+            return preds
+
+st.title('LSTM Model Training and Prediction')
+
+mms = MinMaxScaler()
+scaled_df = mms.fit_transform(df_values)
+df_train_len = int(np.ceil(len(df_values) * .95))
+
+if st.button('Train and Predict'):
+    progress_bar = st.progress(0)
+
+    def run():
+        preds = train_and_predict(df_values, df_train_len, scaled_df, progress_bar)
+        st.write(preds)
+        st.success("Prediction completed!")
+    
+        threading.Thread(target=run).start()
