@@ -230,54 +230,47 @@ else:
                                                                                                                                                           
     with st.expander("Tahmin"):                                                                                                                           
         if len(ticker) == 1:                                                                                                                              
-            df = df["Close"]                                                                                                                              
-            df_values = df.values.reshape(-1, 1)                                                                                                          
-                                                                                                                                                          
-            df_train_len = int(np.ceil(len(df_values) * .95))                                                                                             
-                                                                                                                                                          
-            mms = MinMaxScaler()                                                                                                                          
-            scaled_df = mms.fit_transform(df_values)                                                                                                      
-                                                                                                                                                          
-            train_df = scaled_df[0:df_train_len, :]                                                                                                       
-            x_train = []                                                                                                                                  
-            y_train = []                                                                                                                                  
-                                                                                                                                                          
-            for i in range(60, len(train_df)):                                                                                                            
-                x_train.append(train_df[i - 60:i, 0])                                                                                                     
-                y_train.append(train_df[i, 0])                                                                                                            
-                                                                                                                                                          
-            x_train, y_train = np.array(x_train), np.array(y_train)                                                                                       
-            x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))                                                                        
-                                                                                                                                                          
-            model = Sequential()                                                                                                                          
-            model.add(LSTM(128, return_sequences=True, input_shape=(x_train.shape[1], 1)))                                                                
-            model.add(LSTM(64, return_sequences=False))                                                                                                   
-            model.add(Dense(25))                                                                                                                          
-            model.add(Dense(1))                                                                                                                           
-                                                                                                                                                          
-            model.compile(optimizer="adam", loss="mean_squared_error")                                                                                    
-                                                                                                                                                          
-            model.fit(x_train, y_train, batch_size=1, epochs=1)                                                                                           
-                                                                                                                                                          
-            test_df = scaled_df[df_train_len - 60:, :]                                                                                                    
-            x_test = []                                                                                                                                   
-            y_test = df_values[df_train_len:, :]                                                                                                          
-                                                                                                                                                          
-            for i in range(60, len(test_df)):                                                                                                             
-                x_test.append(test_df[i - 60:i, 0])                                                                                                       
-                                                                                                                                                          
-            x_test = np.array(x_test)                                                                                                                     
-                                                                                                                                                          
-            x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))                                                                            
-            preds = model.predict(x_test)                                                                                                                 
-            preds = mms.inverse_transform(preds)                                                                                                          
-            train = df[:df_train_len]                                                                                                                     
-            valid = df[df_train_len:]                                                                                                                     
-                                                                                                                                                          
-            preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])                                                                    
-                                                                                                                                                          
-            figp = px.line(x=train.index, y=train.values)                                                                                                 
-            figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))                              
-            figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))                                      
-            st.line_chart(figp)                                                                                                                           
+                  @st.cache(allow_output_mutation=True)
+def create_model(input_shape):
+    model = Sequential()
+    model.add(LSTM(128, return_sequences=True, input_shape=input_shape))
+    model.add(LSTM(64, return_sequences=False))
+    model.add(Dense(25))
+    model.add(Dense(1))
+    model.compile(optimizer="adam", loss="mean_squared_error")
+    return model
+
+def train_model(model, x_train, y_train):
+    model.fit(x_train, y_train, batch_size=1, epochs=1)
+    return model
+
+def predict_model(model, x_test):
+    return model.predict(x_test)
+
+st.title('LSTM Model Eğitim ve Tahmin')
+
+input_shape = (x_train.shape[1], 1)
+model = create_model(input_shape)
+
+if st.button('Eğitim ve Tahmin'):
+    with st.spinner('model eğitiliyor...'):
+        try:
+            model = train_model(model, x_train, y_train)
+            st.success('Modeleğitildi')
+
+            test_df = scaled_df[df_train_len - 60:, :]
+            x_test = []
+            y_test = df_values[df_train_len:, :]
+
+            for i in range(60, len(test_df)):
+                x_test.append(test_df[i - 60:i, 0])
+
+            x_test = np.array(x_test)
+            x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+
+            preds = predict_model(model, x_test)
+            st.write(preds)
+            st.success('Tahmin edildi')
+        except Exception as e:
+            st.error(f"Hata: {e}")                                                                                                                
                                                                                                                                                           
