@@ -147,75 +147,7 @@ else:
                                                                                                                                                           
         else:                                                                                                                                             
             st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")                                                                             
-                                                                                                                                                          
-    with st.expander("Hareketli Ortalamalar ve Bollinger Bantları"):                                                                                      
-                                                                                                                                                          
-        if len(ticker) == 1:                                                                                                                              
-                                                                                                                                                          
-                df['MA20'] = df['Close'].rolling(window=20).mean()                                                                                        
-                df['STD20'] = df['Close'].rolling(window=20).std()                                                                                        
-                df['Upper Band'] = df['MA20'] + (df['STD20'] * 2)                                                                                         
-                df['Lower Band'] = df['MA20'] - (df['STD20'] * 2)                                                                                         
-                                                                                                                                                          
-                fig2 = go.Figure()                                                                                                                        
-                                                                                                                                                          
-                fig2.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['Close'],                                                                                                  
-                                          mode='lines',                                                                                                   
-                                          name='Kapanış Fiyatı'))                                                                                         
-                                                                                                                                                          
-                fig2.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['MA20'],                                                                                                   
-                                          mode='lines',                                                                                                   
-                                          name='20 Günlük MA'))                                                                                           
-                                                                                                                                                          
-                fig2.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['Upper Band'],                                                                                             
-                                          mode='lines',                                                                                                   
-                                          name='Üst Bant',                                                                                                
-                                          line=dict(color='rgba(255, 0, 0, 0.5)')))                                                                       
-                                                                                                                                                          
-                fig2.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['Lower Band'],                                                                                             
-                                          mode='lines',                                                                                                   
-                                          name='Alt Bant',                                                                                                
-                                          line=dict(color='rgba(0, 0, 255, 0.5)')))                                                                       
-                st.plotly_chart(fig2)                                                                                                                     
-                                                                                                                                                          
-                df['MA50'] = df['Close'].rolling(window=50).mean()                                                                                        
-                df['STD50'] = df['Close'].rolling(window=50).std()                                                                                        
-                df['Upper Band'] = df['MA50'] + (df['STD50'] * 2)                                                                                         
-                df['Lower Band'] = df['MA50'] - (df['STD50'] * 2)                                                                                         
-                                                                                                                                                          
-                fig5 = go.Figure()                                                                                                                        
-                                                                                                                                                          
-                fig5.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['Close'],                                                                                                  
-                                          mode='lines',                                                                                                   
-                                          name='Kapanış Fiyatı'))                                                                                         
-                                                                                                                                                          
-                fig5.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['MA50'],                                                                                                   
-                                          mode='lines',                                                                                                   
-                                          name='50 Günlük MA'))                                                                                           
-                                                                                                                                                          
-                fig5.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['Upper Band'],                                                                                             
-                                          mode='lines',                                                                                                   
-                                          name='Üst Bant',                                                                                                
-                                          line=dict(color='rgba(255, 0, 0, 0.5)')))                                                                       
-                                                                                                                                                          
-                fig5.add_trace(go.Scatter(x=df.index,                                                                                                     
-                                          y=df['Lower Band'],                                                                                             
-                                          mode='lines',                                                                                                   
-                                          name='Alt Bant',                                                                                                
-                                          line=dict(color='rgba(0, 0, 255, 0.5)')))                                                                       
-                                                                                                                                                          
-                st.plotly_chart(fig5)                                                                                                                     
-                                                                                                                                                          
-        else:                                                                                                                                             
-            st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")                                                                             
-                                                                                                                                                          
+          
     with st.expander("Hisseleri Karşılaştır"):                                                                                                            
                                                                                                                                                           
         if len(ticker) > 1:                                                                                                                               
