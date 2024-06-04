@@ -257,7 +257,7 @@ else:
                                                                                                                                                           
             model.compile(optimizer="adam", loss="mean_squared_error")                                                                                    
                                                                                                                                                           
-            model.fit(x_train, y_train, batch_size=1, epochs=1, verbose=0)                                                                                           
+            model.fit(x_train, y_train, batch_size=1, epochs=1)                                                                                           
                                                                                                                                                           
             test_df = scaled_df[df_train_len - 60:, :]                                                                                                    
             x_test = []                                                                                                                                   
@@ -269,7 +269,7 @@ else:
             x_test = np.array(x_test)                                                                                                                     
                                                                                                                                                           
             x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))                                                                            
-            preds = model.predict(x_test, verbose=0)                                                                                                                 
+            preds = model.predict(x_test)                                                                                                                 
             preds = mms.inverse_transform(preds)                                                                                                          
             train = df[:df_train_len]                                                                                                                     
             valid = df[df_train_len:]                                                                                                                     
