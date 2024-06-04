@@ -3,6 +3,5 @@ yfinance
 plotly.express
 pandas
 pandas_ta
-tensorflow
 numpy
 sklearn
