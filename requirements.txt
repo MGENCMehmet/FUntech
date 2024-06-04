@@ -3,3 +3,6 @@ yfinance
 plotly.express
 pandas
 pandas_ta
+keras
+numpy
+sklearn
