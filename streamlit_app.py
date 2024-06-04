@@ -226,5 +226,5 @@ else:
             st.write("Bu özelliği kullanabilmek için 1'den fazla hisse seçiniz")                                                                          
                                                                                                                                                           
     with st.expander("Tahmin"):                                                                                                                           
-        st.write("Yakında")
+        st.write("Pek Yakında")
           
