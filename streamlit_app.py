@@ -8,7 +8,8 @@ from keras.models import Sequential
 from keras.layers import Dense, LSTM                                                                                                                      
 import numpy as np                                                                                                                                        
 from sklearn.preprocessing import MinMaxScaler                                                                                                            
-                                                                                                                                                          
+import threading
+
 st.set_page_config(layout="wide",                                                                                                                         
                    page_title="FUntech",                                                                                                                  
                    initial_sidebar_state="collapsed",                                                                                                     
