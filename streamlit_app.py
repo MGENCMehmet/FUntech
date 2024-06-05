@@ -112,7 +112,7 @@ elif page == "İndikatörler":
     ticker = col1.multiselect("Hisse Adı Giriniz", tickers, default="ASELS.IS")
     sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
     edate = col3.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
-    col12, col22 = st.columns([7, 3])
+    col12, col22 = st.columns([8, 2])
   
     if len(ticker) == 1:
         df = yf.download(ticker[0], start=sdate, end=edate)
