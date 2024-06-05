@@ -112,11 +112,12 @@ elif page == "İndikatörler":
     ticker = col1.multiselect("Hisse Adı Giriniz", tickers, default="ASELS.IS")
     sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
     edate = col3.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
-
+    col12, col22 = st.columns([7, 3])
+  
     if len(ticker) == 1:
         df = yf.download(ticker[0], start=sdate, end=edate)
         ind_list = df.ta.indicators(as_list=True)
-        selected_indicators = st.multiselect("İndikatör Seç", options=ind_list)
+        selected_indicators = col22.multiselect("İndikatör Seç", options=ind_list)
 
         idf = df[["Close"]]
 
@@ -142,7 +143,7 @@ elif page == "İndikatörler":
                               height=500,
                               )
 
-        st.plotly_chart(figraph)
+        col12.plotly_chart(figraph)
     else:
         st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")
 
