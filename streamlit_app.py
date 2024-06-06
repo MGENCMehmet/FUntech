@@ -55,6 +55,12 @@ page = st.session_state.selected_tab
 st.sidebar.markdown("### Uygulamayı Paylaş")
 st.sidebar.markdown("[LinkedIn'de Paylaş](https://www.linkedin.com/sharing/share-offsite/?url=funtech.streamlit.app)")
 
+st.sidebar.markdown("### Görüş ve Öneriler")
+st.sidebar.text_area("Görüş ve önerilerinizi önemsiyoruz")
+
+if st.sidebar.button("Gönder"):
+    st.sidebar.success("Geri Bildiriminizi Aldık")
+
 st.sidebar.markdown("### Bizi Örnek Alan Bazı Sayfalar")
 st.sidebar.markdown("[TradingView](https://tr.tradingview.com)")
 st.sidebar.markdown("[Binance](https://www.binance.com/)")
@@ -62,12 +68,6 @@ st.sidebar.markdown("[İnvesting](https://tr.investing.com)")
 st.sidebar.markdown("[Binomo](https://binomo.com/)")
 st.sidebar.markdown("[icrypex](https://www.icrypex.com)")
 st.sidebar.markdown("[Midas](https://www.getmidas.com)")
-
-st.sidebar.markdown("### Görüş ve Öneriler")
-st.sidebar.text_area("Görüş ve önerilerinizi önemsiyoruz")
-
-if st.sidebar.button("Gönder"):
-    st.sidebar.success("Geri Bildiriminizi Aldık")
 
 
 def dest(dfa):
