@@ -147,7 +147,7 @@ elif page == "İndikatörler":
               else:
                   idf[technical_indicator] = indicator
             except Exception as e:
-              st.write(f"Maalesef şuan bu özellik kullanımda değil{e}")
+              st.write(f"")
         figraph = px.line(idf, x=idf.index, y=idf.columns,  title=f'İndikatörler ve  {ticker}  Kapanış Fiyatı')
 
         figraph.update_layout(xaxis_title='Tarih',
