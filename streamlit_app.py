@@ -56,7 +56,7 @@ st.sidebar.markdown("### Uygulamayı Paylaş")
 st.sidebar.markdown("[LinkedIn'de Paylaş](https://www.linkedin.com/sharing/share-offsite/?url=funtech.streamlit.app)")
 
 st.sidebar.markdown("### Bizi Örnek Alan Bazı Sayfalar")
-st.sidebar.markdown("[TradingView](https://tr.tradingview.com)
+st.sidebar.markdown("[TradingView](https://tr.tradingview.com)")
 st.sidebar.markdown("[Binance](https://www.binance.com/)")
 st.sidebar.markdown("[İnvesting](https://tr.investing.com)")
 st.sidebar.markdown("[Binomo](https://binomo.com/)")
