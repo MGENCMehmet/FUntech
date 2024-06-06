@@ -139,7 +139,7 @@ elif page == "İndikatörler":
                                               open=df["Open"],
                                               volume=df["Volume"])
             except Exception as e:
-              st.write(f"Maalesef şuan bu özellik kullanımda değil")
+              st.write(f"Maalesef bu özellik şuan kullanımda değil")
             try:  
               if isinstance(indicator, pd.DataFrame):
                   for col in indicator.columns:
@@ -147,7 +147,7 @@ elif page == "İndikatörler":
               else:
                   idf[technical_indicator] = indicator
             except Exception as e:
-              st.write(f"")
+              st.write("",endl="")
         figraph = px.line(idf, x=idf.index, y=idf.columns,  title=f'İndikatörler ve  {ticker}  Kapanış Fiyatı')
 
         figraph.update_layout(xaxis_title='Tarih',
