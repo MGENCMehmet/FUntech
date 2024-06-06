@@ -138,8 +138,8 @@ elif page == "İndikatörler":
                                               high=df["High"],
                                               open=df["Open"],
                                               volume=df["Volume"])
-            except hata as h:
-              st.write("Maalesef şuan bu özellik kullanımda değil")
+            except Exception as e:
+              st.write(f"Maalesef şuan bu özellik kullanımda değil{e}")
 
             if isinstance(indicator, pd.DataFrame):
                 for col in indicator.columns:
