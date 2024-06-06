@@ -132,11 +132,14 @@ elif page == "İndikatörler":
 
         for technical_indicator in selected_indicators:
             method = technical_indicator
-            indicator = getattr(ta, method)(low=df["Low"],
-                                            close=df["Close"],
-                                            high=df["High"],
-                                            open=df["Open"],
-                                            volume=df["Volume"])
+            try:
+              indicator = getattr(ta, method)(low=df["Low"],
+                                               close=df["Close"],
+                                              high=df["High"],
+                                              open=df["Open"],
+                                              volume=df["Volume"])
+            except hata as h:
+              st.write("Maalesef şuan bu özellik kullanımda değil")
 
             if isinstance(indicator, pd.DataFrame):
                 for col in indicator.columns:
