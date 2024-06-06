@@ -138,8 +138,6 @@ elif page == "İndikatörler":
                                               high=df["High"],
                                               open=df["Open"],
                                               volume=df["Volume"])
-            except Exception as e:
-              st.write(f"Maalesef şuan bu özellik kullanımda değil{e}")
 
             if isinstance(indicator, pd.DataFrame):
                 for col in indicator.columns:
@@ -156,6 +154,8 @@ elif page == "İndikatörler":
                               )
 
         col12.plotly_chart(figraph)
+          except Exception as e:
+              st.write(f"Maalesef şuan bu özellik kullanımda değil{e}")
     else:
         st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")
 
