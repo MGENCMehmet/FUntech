@@ -146,7 +146,7 @@ elif page == "İndikatörler":
                       idf[col] = indicator[col]
               else:
                   idf[technical_indicator] = indicator
-            except Exception1 as e:
+            except Exception as e:
               st.write(f"Maalesef şuan bu özellik kullanımda değil{e}")
         figraph = px.line(idf, x=idf.index, y=idf.columns,  title=f'İndikatörler ve  {ticker}  Kapanış Fiyatı')
 
