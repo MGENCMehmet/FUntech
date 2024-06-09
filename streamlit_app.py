@@ -11,6 +11,91 @@ st.set_page_config(layout="wide",
                    page_icon=":chart_with_upwards_trend:",
                    )
 
+css = """
+<style>
+
+body {
+    background-color: #f7f7f7;
+    color: #444444;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.reportview-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+
+.sidebar .sidebar-content {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    animation: slideInLeft 0.5s ease-in-out;
+}
+
+
+h1, h2, h3 {
+    color: #1e90ff;
+    font-weight: 700;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+
+.stButton button {
+    background-color: #1e90ff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.stButton button:hover {
+    background-color: #1c86ee;
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+</style>
+"""
+st.markdown(css, unsafe_allow_html=True)
+
 st.write(
     '<h1 style="text-align: center; font-size: 70px;">FUntech</h1>',
     unsafe_allow_html=True
