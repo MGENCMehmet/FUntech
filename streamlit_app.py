@@ -153,6 +153,7 @@ st.sidebar.markdown("[İnvesting](https://tr.investing.com)")
 st.sidebar.markdown("[Binomo](https://binomo.com/)")
 st.sidebar.markdown("[icrypex](https://www.icrypex.com)")
 st.sidebar.markdown("[Midas](https://www.getmidas.com)")
+st.sidebar.markdown("[Tahmin](https://colab.research.google.com/drive/1h_DJiTS2aedMWQqLxPp__gQSlReQEECY?usp=sharing)")
 
 
 def dest(dfa):
