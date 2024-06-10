@@ -289,5 +289,4 @@ elif page == "Hisseleri Karşılaştır":
         st.write("Bu özelliği kullanabilmek için 1'den fazla hisse seçiniz")
 
 elif page == "Tahmin":
-    st.write("Pek yakında")
-    st.sidebar.markdown("[Tahmin](https://colab.research.google.com/drive/1h_DJiTS2aedMWQqLxPp__gQSlReQEECY?usp=sharing)")
+    st.markdown("[Tahmin](https://colab.research.google.com/drive/1h_DJiTS2aedMWQqLxPp__gQSlReQEECY?usp=sharing)")
