@@ -293,9 +293,10 @@ elif page == "Hisseleri Karşılaştır":
         st.write("Bu özelliği kullanabilmek için 1'den fazla hisse seçiniz")
 
 elif page == "Tahmin":
-    ticker = st.selectbox("Hisse Adı Giriniz", tickers)
-    sdate = st.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2003-01-1"))
-    edate = st.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
+    col1, col2, col3 = st.columns(3)
+    ticker = col1.selectbox("Hisse Adı Giriniz", tickers)
+    sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2003-01-1"))
+    edate = col3.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
   
     df = yf.download(ticker, sdate, edate)
     df = df["Close"]
