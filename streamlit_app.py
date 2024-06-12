@@ -282,7 +282,7 @@ elif page == "CandleStick Grafiği":
 elif page == "Hisseleri Karşılaştır":
     col1, col2, col3 = st.columns(3)
     ticker = col1.multiselect("Hisse Adı Giriniz", tickers, default=["ASELS.IS", "AAPL"])
-    sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
+    sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2003-01-1"))
     edate = col3.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
 
     if len(ticker) > 1:
