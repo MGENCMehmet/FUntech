@@ -293,8 +293,11 @@ elif page == "Hisseleri Karşılaştır":
         st.write("Bu özelliği kullanabilmek için 1'den fazla hisse seçiniz")
 
 elif page == "Tahmin":
-    st.markdown("[Tahmin](https://colab.research.google.com/drive/1h_DJiTS2aedMWQqLxPp__gQSlReQEECY?usp=sharing)")
-    df = yf.download("GC=F")
+    ticker = st.selectbox("Hisse Adı Giriniz", tickers)
+    sdate = st.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
+    edate = st.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
+  
+    df = yf.download(ticker, sdate, edate)
     df = df["Close"]
     df_values = df.values.reshape(-1, 1)
     
