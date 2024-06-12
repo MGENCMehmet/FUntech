@@ -4,6 +4,10 @@ import plotly.express as px
 import pandas as pd
 import pandas_ta as ta
 import plotly.graph_objects as go
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
+from sklearn.preprocessing import MinMaxScaler
 
 st.set_page_config(layout="wide",
                    page_title="FUntech",
