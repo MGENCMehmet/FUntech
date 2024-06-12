@@ -294,7 +294,7 @@ elif page == "Hisseleri Karşılaştır":
 
 elif page == "Tahmin":
     ticker = st.selectbox("Hisse Adı Giriniz", tickers)
-    sdate = st.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
+    sdate = st.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2003-01-1"))
     edate = st.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
   
     df = yf.download(ticker, sdate, edate)
