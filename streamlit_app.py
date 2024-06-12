@@ -297,58 +297,60 @@ elif page == "Tahmin":
     ticker = col1.selectbox("Hisse Adı Giriniz", tickers)
     sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2003-01-1"))
     edate = col3.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
-  
-    df = yf.download(ticker, sdate, edate)
-    df = df["Close"]
-    df_values = df.values.reshape(-1, 1)
-    
-    df_train_len = int(np.ceil(len(df_values) * .95))
-    
-    mms = MinMaxScaler()
-    scaled_df = mms.fit_transform(df_values)
-    
-    train_df = scaled_df[0:df_train_len, :]
-    x_train = []
-    y_train = []
-    
-    for i in range(3, len(train_df)):
-        x_train.append(train_df[i - 3:i, 0])
-        y_train.append(train_df[i, 0])
-    
-    x_train, y_train = np.array(x_train), np.array(y_train)
-    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-    
-    if st.button('Tahmin Et'):
-        with st.spinner('Tahmin Ediliyor...'):
-            model = Sequential()
-            model.add(LSTM(128, return_sequences=True, input_shape=(x_train.shape[1], 1)))
-            model.add(LSTM(64, return_sequences=False))
-            model.add(Dense(25))
-            model.add(Dense(1))
-    
-            model.compile(optimizer="adam", loss="mean_squared_error")
-            model.fit(x_train, y_train, batch_size=1, epochs=1)
-            st.success('Model Eğitildi')
-    
-            test_df = scaled_df[df_train_len - 3:, :]
-            x_test = []
-            y_test = df_values[df_train_len:, :]
-    
-            for i in range(3, len(test_df)):
-                x_test.append(test_df[i - 3:i, 0])
-    
-            x_test = np.array(x_test)
-            x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
-    
-            preds = model.predict(x_test)
-            preds = mms.inverse_transform(preds)
-    
-            train = df[:df_train_len]
-            valid = df[df_train_len:]
-            preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])
-    
-            figp = px.line(x=train.index, y=train.values, title='Model Predictions')
-            figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))
-            figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))
-            
-            st.plotly_chart(figp)
+    if len(ticker) == 1:
+      df = yf.download(ticker, sdate, edate)
+      df = df["Close"]
+      df_values = df.values.reshape(-1, 1)
+      
+      df_train_len = int(np.ceil(len(df_values) * .95))
+      
+      mms = MinMaxScaler()
+      scaled_df = mms.fit_transform(df_values)
+      
+      train_df = scaled_df[0:df_train_len, :]
+      x_train = []
+      y_train = []
+      
+      for i in range(3, len(train_df)):
+          x_train.append(train_df[i - 3:i, 0])
+          y_train.append(train_df[i, 0])
+      
+      x_train, y_train = np.array(x_train), np.array(y_train)
+      x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+      
+      if st.button('Tahmin Et'):
+          with st.spinner('Tahmin Ediliyor...'):
+              model = Sequential()
+              model.add(LSTM(128, return_sequences=True, input_shape=(x_train.shape[1], 1)))
+              model.add(LSTM(64, return_sequences=False))
+              model.add(Dense(25))
+              model.add(Dense(1))
+      
+              model.compile(optimizer="adam", loss="mean_squared_error")
+              model.fit(x_train, y_train, batch_size=1, epochs=1)
+              st.success('Model Eğitildi')
+      
+              test_df = scaled_df[df_train_len - 3:, :]
+              x_test = []
+              y_test = df_values[df_train_len:, :]
+      
+              for i in range(3, len(test_df)):
+                  x_test.append(test_df[i - 3:i, 0])
+      
+              x_test = np.array(x_test)
+              x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+      
+              preds = model.predict(x_test)
+              preds = mms.inverse_transform(preds)
+      
+              train = df[:df_train_len]
+              valid = df[df_train_len:]
+              preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])
+      
+              figp = px.line(x=train.index, y=train.values, title=f'{ticker}  için Tahminlerimiz')
+              figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))
+              figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))
+              
+              st.plotly_chart(figp)
+    else:
+      st.write("Bu özelliği kullanabilmek için 1 hisse seçiniz")
