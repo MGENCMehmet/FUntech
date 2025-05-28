@@ -190,7 +190,7 @@ if page == "Hisse Fiyatları":
             fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['High'], mode='lines', name=f'{tick} High'))
             fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Low'], mode='lines', name=f'{tick} Low'))
             fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Close'], mode='lines', name=f'{tick} Close'))
-            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Adj Close'], mode='lines',
+            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Close'], mode='lines',
                                      name=f'{tick} Adj Close'))
 
         fig.update_layout(
