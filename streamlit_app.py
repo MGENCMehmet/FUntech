@@ -207,45 +207,57 @@ if page == "Hisse Fiyatları":
 elif page == "İndikatörler":
     col1, col2, col3 = st.columns(3)
     ticker = col1.multiselect("Hisse Adı Giriniz", tickers, default="ASELS.IS")
-    sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-1"))
+    sdate = col2.date_input("Başlangıç Tarihi Giriniz", value=pd.to_datetime("2023-01-01"))
     edate = col3.date_input("Bitiş Tarihi Giriniz", value=pd.to_datetime("today"))
     col12, col22 = st.columns([8, 2])
 
     if len(ticker) == 1:
-        df = yf.download(ticker[0], start=sdate, end=edate)
-        ind_list = df.ta.indicators(as_list=True)
+        df = yf.download(ticker[0], start=sdate, end=edate)  # MultiIndex yapısı burada geliyor
+
+        # Kolonlara MultiIndex ile erişim
+        close = df[("Close", ticker[0])]
+        high = df[("High", ticker[0])]
+        low = df[("Low", ticker[0])]
+        open_ = df[("Open", ticker[0])]
+        volume = df[("Volume", ticker[0])]
+
+        ind_list = ta.indicators(as_list=True)
         selected_indicators = col22.multiselect("İndikatör Seç", options=ind_list)
 
-        idf = df[["Close"]]
+        idf = pd.DataFrame({"Close": close})
 
         for technical_indicator in selected_indicators:
             method = technical_indicator
             try:
-              indicator = getattr(ta, method)(low=df["Low"],
-                                               close=df["Close"],
-                                              high=df["High"],
-                                              open=df["Open"],
-                                              volume=df["Volume"])
+                indicator = getattr(ta, method)(
+                    close=close,
+                    high=high,
+                    low=low,
+                    open=open_,
+                    volume=volume
+                )
             except Exception as e:
-              st.write(f"Maalesef bu özellik şuan kullanımda değil")
-            try:  
-              if isinstance(indicator, pd.DataFrame):
-                  for col in indicator.columns:
-                      idf[col] = indicator[col]
-              else:
-                  idf[technical_indicator] = indicator
-            except Exception as e:
-              st.write("")
-        figraph = px.line(idf, x=idf.index, y=idf.columns,  title=f'İndikatörler ve  {ticker}  Kapanış Fiyatı')
+                st.write(f"Maalesef bu özellik şu an kullanımda değil")
 
-        figraph.update_layout(xaxis_title='Tarih',
-                              yaxis_title='Fiyat',
-                              width=900,
-                              height=500,
-                              )
+            try:
+                if isinstance(indicator, pd.DataFrame):
+                    for col in indicator.columns:
+                        idf[col] = indicator[col]
+                else:
+                    idf[technical_indicator] = indicator
+            except Exception as e:
+                st.write("")
+
+        figraph = px.line(idf, x=idf.index, y=idf.columns, title=f'İndikatörler ve {ticker[0]} Kapanış Fiyatı')
+
+        figraph.update_layout(
+            xaxis_title='Tarih',
+            yaxis_title='Fiyat',
+            width=900,
+            height=500,
+        )
 
         col12.plotly_chart(figraph)
-
     else:
         st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")
 
