@@ -176,7 +176,7 @@ if page == "Hisse Fiyatları":
         dfl = []
 
         for tick in ticker:
-            df = yf.download(tick, start=sdate, end=edate, group_by='column')
+            df = yf.download(tick, start=sdate, end=edate)
             df['Ticker'] = tick
             dfl.append(df)
 
@@ -186,10 +186,11 @@ if page == "Hisse Fiyatları":
 
         for tick in ticker:
             ticker_df = dfll[dfll['Ticker'] == tick]
-            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Open'], mode='lines', name=f'{tick} Open'))
-            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['High'], mode='lines', name=f'{tick} High'))
-            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Low'], mode='lines', name=f'{tick} Low'))
-            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df['Close'], mode='lines', name=f'{tick} Close'))
+            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df[('Open', tick)], mode='lines', name=f'{tick} Open'))
+            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df[('High', tick)], mode='lines', name=f'{tick} High'))
+            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df[('Low', tick)], mode='lines', name=f'{tick} Low'))
+            fig.add_trace(go.Scatter(x=ticker_df.index, y=ticker_df[('Close', tick)], mode='lines', name=f'{tick} Close'))
+
 
         fig.update_layout(
             title=f'{ticker}  Fiyat Değerleri',
