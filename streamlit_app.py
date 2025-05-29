@@ -361,12 +361,15 @@ elif page == "Tahmin":
               train = df[:df_train_len]
               valid = df[df_train_len:]
               preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])
-            
-              figp = px.line(x=train.index, y=train.values, title=f'{ticker[0]}  için Tahminlerimiz')
+
+              preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])
+              
+              figp = px.line(train, title=f'{ticker[0]} için Tahminlerimiz')
               figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))
               figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))
               
               st.plotly_chart(figp)
+
 
     else:
       st.write("Bu özelliği kullanabilmek için 1 hisse seçiniz")
