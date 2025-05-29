@@ -360,21 +360,16 @@ elif page == "Tahmin":
 
               train = df[:df_train_len]
               valid = df[df_train_len:]
-              preds = pd.Series(index=valid.index, data=preds.reshape(-1))
-
-              figp = go.Figure()
+              preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])
               
-              figp.add_trace(go.Scatter(x=train.index, y=train.values, mode='lines', name='Train', line=dict(color='blue')))
+              ticker_name = ticker[0]
+              
+              figp = px.line(train, title=f'{ticker_name} için Tahminlerimiz')
               figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))
               figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))
               
-              figp.update_layout(title=f'{ticker_name} için Tahminlerimiz',
-                                 xaxis_title='Tarih',
-                                 yaxis_title='Fiyat',
-                                 width=1000,
-                                 height=500)
-              
               st.plotly_chart(figp)
+
 
     else:
       st.write("Bu özelliği kullanabilmek için 1 hisse seçiniz")
