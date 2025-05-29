@@ -366,6 +366,6 @@ elif page == "Tahmin":
               figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))
               figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))
 
-st.plotly_chart(figp)
+              st.plotly_chart(figp)
     else:
       st.write("Bu özelliği kullanabilmek için 1 hisse seçiniz")
