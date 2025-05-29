@@ -1,8 +1,8 @@
 streamlit
 yfinance
 plotly.express
-pandas==1.5.3
-pandas_ta==0.3.14b0
+pandas
+pandas_ta
 tensorflow
-numpy==1.23.5
+numpy
 scikit-learn
