@@ -221,7 +221,9 @@ elif page == "İndikatörler":
         open_ = df[("Open", ticker[0])]
         volume = df[("Volume", ticker[0])]
 
-        ind_list = ta.indicators(as_list=True)
+        ind_list = [
+    "sma", "ema", "rsi", "macd", "bbands", "adx", "stoch", "cci", "atr"
+]
         selected_indicators = col22.multiselect("İndikatör Seç", options=ind_list)
 
         idf = pd.DataFrame({"Close": close})
