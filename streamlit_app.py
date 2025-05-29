@@ -363,10 +363,11 @@ elif page == "Tahmin":
               preds = pd.Series(index=valid.index, data=preds.reshape(1, len(preds))[0])
               
               ticker_name = ticker[0]
-              
-              figp = px.line(train, title=f'{ticker_name} için Tahminlerimiz')
+            
+              figp = go.Figure()
+              figp.add_trace(go.Scatter(x=train.index, y=train.values, mode='lines', name='Train', line=dict(color='blue')))
               figp.add_trace(go.Scatter(x=valid.index, y=valid.values, mode='lines', name='Valid', line=dict(color='orange')))
-              figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Preds', line=dict(color='green')))
+              figp.add_trace(go.Scatter(x=valid.index, y=preds, mode='lines', name='Predictions', line=dict(color='green')))
               
               st.plotly_chart(figp)
 
