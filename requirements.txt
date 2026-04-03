@@ -1,6 +1,6 @@
 streamlit
 pandas
-pandas-ta
+ta
 numpy==1.23.5
 plotly
 yfinance
