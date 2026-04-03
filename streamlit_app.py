@@ -2,7 +2,9 @@ import streamlit as st
 import yfinance as yf
 import plotly.express as px
 import pandas as pd
-import pandas_ta as ta
+from ta.momentum import RSIIndicator, StochasticOscillator
+from ta.trend import MACD, SMAIndicator, EMAIndicator, CCIIndicator, ADXIndicator
+from ta.volatility import BollingerBands, AverageTrueRange
 import plotly.graph_objects as go
 import numpy as np
 from tensorflow.keras.models import Sequential
@@ -212,45 +214,62 @@ elif page == "İndikatörler":
     col12, col22 = st.columns([8, 2])
 
     if len(ticker) == 1:
-        df = yf.download(ticker[0], start=sdate, end=edate)  # MultiIndex yapısı burada geliyor
+        df = yf.download(ticker[0], start=sdate, end=edate)
 
-        # Kolonlara MultiIndex ile erişim
-        close = df[("Close", ticker[0])]
-        high = df[("High", ticker[0])]
-        low = df[("Low", ticker[0])]
-        open_ = df[("Open", ticker[0])]
-        volume = df[("Volume", ticker[0])]
+        close = df["Close"]
+        high = df["High"]
+        low = df["Low"]
+        open_ = df["Open"]
+        volume = df["Volume"]
 
-        ind_list = [
-    "sma", "ema", "rsi", "macd", "bbands", "adx", "stoch", "cci", "atr"
-]
+        ind_list = ["sma", "ema", "rsi", "macd", "bbands", "adx", "stoch", "cci", "atr"]
         selected_indicators = col22.multiselect("İndikatör Seç", options=ind_list)
 
-        idf = pd.DataFrame({"Close": close})
+        idf = pd.DataFrame(index=df.index)
+        idf["Close"] = close
 
-        for technical_indicator in selected_indicators:
-            method = technical_indicator
+        for ind in selected_indicators:
             try:
-                indicator = getattr(ta, method)(
-                    close=close,
-                    high=high,
-                    low=low,
-                    open=open_,
-                    volume=volume
-                )
-            except Exception as e:
-                st.write(f"Maalesef bu özellik şu an kullanımda değil")
+                if ind == "sma":
+                    idf["SMA"] = SMAIndicator(close).sma_indicator()
 
-            try:
-                if isinstance(indicator, pd.DataFrame):
-                    for col in indicator.columns:
-                        idf[col] = indicator[col]
-                else:
-                    idf[technical_indicator] = indicator
-            except Exception as e:
-                st.write("")
+                elif ind == "ema":
+                    idf["EMA"] = EMAIndicator(close).ema_indicator()
 
-        figraph = px.line(idf, x=idf.index, y=idf.columns, title=f'İndikatörler ve {ticker[0]} Kapanış Fiyatı')
+                elif ind == "rsi":
+                    idf["RSI"] = RSIIndicator(close).rsi()
+
+                elif ind == "macd":
+                    macd = MACD(close)
+                    idf["MACD"] = macd.macd()
+                    idf["MACD_signal"] = macd.macd_signal()
+
+                elif ind == "bbands":
+                    bb = BollingerBands(close)
+                    idf["BB_high"] = bb.bollinger_hband()
+                    idf["BB_low"] = bb.bollinger_lband()
+
+                elif ind == "adx":
+                    adx = ADXIndicator(high, low, close)
+                    idf["ADX"] = adx.adx()
+
+                elif ind == "stoch":
+                    stoch = StochasticOscillator(high, low, close)
+                    idf["Stoch"] = stoch.stoch()
+
+                elif ind == "cci":
+                    cci = CCIIndicator(high, low, close)
+                    idf["CCI"] = cci.cci()
+
+                elif ind == "atr":
+                    atr = AverageTrueRange(high, low, close)
+                    idf["ATR"] = atr.average_true_range()
+
+            except Exception as e:
+                st.warning(f"{ind} hesaplanamadı")
+
+        figraph = px.line(idf, x=idf.index, y=idf.columns,
+                          title=f'İndikatörler ve {ticker[0]} Kapanış Fiyatı')
 
         figraph.update_layout(
             xaxis_title='Tarih',
@@ -260,6 +279,7 @@ elif page == "İndikatörler":
         )
 
         col12.plotly_chart(figraph)
+
     else:
         st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")
 
