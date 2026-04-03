@@ -214,8 +214,12 @@ elif page == "İndikatörler":
     col12, col22 = st.columns([8, 2])
 
     if len(ticker) == 1:
-        df = yf.download(ticker[0], start=sdate, end=edate)
-
+        df = yf.download(ticker[0], start=sdate, end=edate, group_by='column')
+      
+        if df.empty:
+          st.error("Veri çekilemedi")
+          st.stop()
+          
         close = df["Close"]
         high = df["High"]
         low = df["Low"]
