@@ -220,9 +220,9 @@ elif page == "İndikatörler":
           st.error("Veri çekilemedi")
           st.stop()
           
-        close = close.astype(float)
-        high = high.astype(float)
-        low = low.astype(float)
+        close = df["Close"].astype(float)
+        high = df["High"].astype(float)
+        low = df["Low"].astype(float)
         open_ = df["Open"]
         volume = df["Volume"]
 
