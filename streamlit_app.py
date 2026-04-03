@@ -284,7 +284,7 @@ elif page == "İndikatörler":
 
         col12.plotly_chart(figraph)
 
-    st.write(idf.tail())
+        st.write(idf.tail())
 
     else:
         st.write("Bu özelliği kullanabilmek için sadece 1 hisse seçiniz")
